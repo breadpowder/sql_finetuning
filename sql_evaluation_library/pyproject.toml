@@ -1,0 +1,67 @@
+# pyproject.toml (located at the root of the sql_evaluation_library project)
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+# backend-path = ["."] # Not typically needed unless hatch_jupyter or similar is a direct non-PEP517 build dep
+
+[project]
+name = "sql-eval-lib"
+version = "0.1.0" # Initial version
+description = "A Python library for evaluating Text-to-SQL models."
+readme = "README.md" # Assumes README.md is in the same directory as pyproject.toml
+requires-python = ">=3.8"
+license = {text = "Apache-2.0"}
+authors = [
+    {name = "AI Assistant Jules", email = "noreply@example.com"} # Placeholder
+]
+keywords = ["sql", "evaluation", "llm", "text-to-sql", "langfuse"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12", # Adding 3.12 as it's current
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Testing",
+]
+
+dependencies = [
+    "langfuse>=2.0,<4.0",    # Allowing minor and patch updates within v2 and v3
+    "openai>=1.0,<2.0",      # Allowing minor and patch updates within v1
+    "sqlglot>=26.0,<27.0",   # Based on version used in earlier llm_evaluate.py step (v26.19.0)
+    # "python-dotenv",      # Not a core library dependency, used for examples/scripts if they load .env
+]
+
+[project.urls]
+"Homepage" = "https://github.com/placeholder/sql-eval-lib" # Placeholder
+"Repository" = "https://github.com/placeholder/sql-eval-lib" # Placeholder
+"Bug Tracker" = "https://github.com/placeholder/sql-eval-lib/issues" # Placeholder
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0,<9.0", 
+    "ruff>=0.1.0,<0.6.0" # Example popular linter/formatter
+]
+# Example for notebook usage if not included in core
+# notebook = ["jupyterlab", "ipywidgets"]
+```
+
+**Notes on choices:**
+*   **`backend-path`**: Commented out as it's usually not needed for `hatchling` unless specific plugins not following PEP 517 are directly included in the project structure for the build.
+*   **`requires-python`**: Kept as `>=3.8`.
+*   **`classifiers`**: Added Python 3.12.
+*   **`dependencies`**:
+    *   `langfuse`: Updated to `<4.0` to allow for v3.x if available and compatible, as v3 was mentioned in Langfuse docs.
+    *   `sqlglot`: Set to `>=26.0,<27.0` to align with the version `26.19.0` installed when `llm_evaluate.py` was created. This provides a stable range.
+    *   `python-dotenv`: Commented out as it's not a direct dependency of the *library* itself, but rather for convenience in running examples or scripts. If it were to be used by the library core, it would be uncommented.
+*   **`[project.optional-dependencies]`**: Updated `dev` dependencies with more common version pinning.
+
+The file `sql_evaluation_library/pyproject.toml` should now be created with this content.
