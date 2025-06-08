@@ -1,7 +1,7 @@
 # sql_evaluation_library/src/sql_eval_lib/langfuse/manager.py
 import os
 import langfuse
-from langfuse.model import TraceClient # For type hinting
+from langfuse.client import StatefulTraceClient # For type hinting
 from datetime import datetime
 
 class LangfuseClient: # Renamed from LangfuseManager
@@ -67,7 +67,7 @@ class LangfuseClient: # Renamed from LangfuseManager
             raise ConnectionError(f"Langfuse client initialization failed: {e}")
 
 
-    def get_trace(self, item_id: str, session_id: str = None, user_id: str = None, tags: list = None) -> TraceClient | None:
+    def get_trace(self, item_id: str, session_id: str = None, user_id: str = None, tags: list = None) -> StatefulTraceClient | None:
         """
         Creates and returns a Langfuse trace object.
 
@@ -78,7 +78,7 @@ class LangfuseClient: # Renamed from LangfuseManager
             tags (list, optional): Additional tags for the trace.
 
         Returns:
-            langfuse.model.TraceClient or None: The created trace object, or None if Langfuse is disabled or trace creation fails.
+            langfuse.client.StatefulTraceClient or None: The created trace object, or None if Langfuse is disabled or trace creation fails.
         """
         if not self.enabled:
             print("LangfuseClient: Logging disabled, cannot get trace.") # Updated class name in log
@@ -105,7 +105,7 @@ class LangfuseClient: # Renamed from LangfuseManager
             print(f"Langfuse: Error creating trace for item_id '{item_id}'. Error: {e}")
             return None
 
-    def log_model_generation(self, trace: TraceClient, sql_prompt: str, sql_context: str, 
+    def log_model_generation(self, trace: StatefulTraceClient, sql_prompt: str, sql_context: str, 
                              generated_sql: str, start_time: datetime, end_time: datetime, 
                              metadata: dict = None) -> None:
         """
@@ -128,7 +128,7 @@ class LangfuseClient: # Renamed from LangfuseManager
             print(f"Langfuse: Error logging model generation for trace_id '{trace.id}'. Error: {e}")
 
 
-    def log_evaluator_generation(self, trace: TraceClient, prompt_to_evaluator: any, 
+    def log_evaluator_generation(self, trace: StatefulTraceClient, prompt_to_evaluator: any, 
                                  evaluation_result: any, start_time: datetime, end_time: datetime, 
                                  model_name: str, metadata: dict = None) -> None:
         """
@@ -150,7 +150,7 @@ class LangfuseClient: # Renamed from LangfuseManager
         except Exception as e:
             print(f"Langfuse: Error logging evaluator generation for trace_id '{trace.id}'. Error: {e}")
 
-    def log_score(self, trace: TraceClient, name: str, value: any, comment: str = None) -> None:
+    def log_score(self, trace: StatefulTraceClient, name: str, value: any, comment: str = None) -> None:
         """
         Logs a score to the given trace.
         """
@@ -162,7 +162,7 @@ class LangfuseClient: # Renamed from LangfuseManager
         except Exception as e:
             print(f"Langfuse: Error logging score '{name}' for trace_id '{trace.id}'. Error: {e}")
     
-    def log_event(self, trace: TraceClient, name: str, metadata: dict = None, **kwargs) -> None:
+    def log_event(self, trace: StatefulTraceClient, name: str, metadata: dict = None, **kwargs) -> None:
         """
         Logs a generic event to the trace.
         """
@@ -185,10 +185,3 @@ class LangfuseClient: # Renamed from LangfuseManager
             self.langfuse.flush()
         except Exception as e:
             print(f"Langfuse: Error during flush. Error: {e}")
-```
-
-The `LangfuseManager` code is now correctly placed in the file.
-The `get_trace` method uses `id=item_id` as specified in the design.
-Added `log_event` method as it was in the placeholder and is generally useful.
-
-Next, I will update `sql_evaluation_library/__init__.py`.

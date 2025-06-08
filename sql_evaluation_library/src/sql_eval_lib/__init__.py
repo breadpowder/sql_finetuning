@@ -1,20 +1,69 @@
 # sql_evaluation_library/src/sql_eval_lib/__init__.py
-from .evaluation.orchestrator import Orchestrator
-from .models.interface import ModelInterface
-from .models.adapters import DummyModelAdapter, OpenAIModelAdapter
-from .langfuse.manager import LangfuseClient
-# Potentially LLMEvaluationModule and ExecutionEvaluationModule if they are to be used directly
-from .evaluation.llm_evaluator import LLMEvaluationModule
-from .evaluation.exec_evaluator import ExecutionEvaluationModule
+
+"""
+SQL Evaluation Library
+
+A comprehensive library for evaluating SQL query generation using multiple evaluation methods.
+"""
+
+# Import the refactored evaluation framework components
+from .evaluation import (
+    # Base Classes
+    EvaluationStatus,
+    EvaluationContext,
+    MetricResult,
+    SuiteResult,
+    EvaluationResult,
+    EvaluationMetric,
+    EvaluationSuite,
+    BaseEvaluator,
+    LLMEvaluator,
+    ExecutionEvaluator,
+    # Concrete SQL Classes
+    SQLEvaluationContext,
+    SQLLLMEvaluator,
+    SQLExecutionEvaluator,
+)
+
+# Import metrics
+from .evaluation.metrics import (
+    SemanticSimilarityMetric,
+    ExecutionAccuracyMetric,
+    SyntaxValidityMetric,
+    SQLSyntaxMetric,
+    SQLExecutionAccuracyMetric,
+)
+
+# Configuration and utilities
+from .config import EvaluationConfig, LangfuseConfig, get_config
 
 __version__ = "0.1.0" # Matches pyproject.toml
 
 __all__ = [
-    "Orchestrator",
-    "ModelInterface",
-    "DummyModelAdapter",
-    "OpenAIModelAdapter",
-    "LangfuseClient",
-    "LLMEvaluationModule",
-    "ExecutionEvaluationModule",
+    # Evaluation Framework
+    "EvaluationStatus",
+    "EvaluationContext",
+    "MetricResult",
+    "SuiteResult",
+    "EvaluationResult",
+    "EvaluationMetric",
+    "EvaluationSuite",
+    "BaseEvaluator",
+    "LLMEvaluator",
+    "ExecutionEvaluator",
+    "SQLEvaluationContext",
+    "SQLLLMEvaluator",
+    "SQLExecutionEvaluator",
+
+    # Metrics
+    "SemanticSimilarityMetric",
+    "ExecutionAccuracyMetric",
+    "SyntaxValidityMetric",
+    "SQLSyntaxMetric",
+    "SQLExecutionAccuracyMetric",
+
+    # Configuration
+    "EvaluationConfig",
+    "LangfuseConfig", 
+    "get_config",
 ]

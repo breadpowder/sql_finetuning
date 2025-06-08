@@ -118,4 +118,4 @@ Just the raw SQL query.
         final_error_message = f"Failed to get response from OpenAI after {max_retries} retries."
         print(final_error_message)
         return f"ERROR: {final_error_message}" # Return final error message
-```
+

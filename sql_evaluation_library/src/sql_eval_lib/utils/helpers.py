@@ -28,9 +28,3 @@ def split_sql_statements(sql_script: str) -> list[str]:
 
 # Placeholder for other utility functions that might be added later,
 # e.g., more sophisticated SQL parsing or comparison logic if needed.
-```
-
-This implementation of `split_sql_statements` first removes common SQL comment types (block and single-line) and then splits by semicolon. It finishes by stripping whitespace and removing any resulting empty statements. This should be reasonably robust for the `sql_context` strings typically found in datasets like `gretelai/synthetic_text_to_sql`.The `sql_evaluation_library/utils.py` file with `split_sql_statements` has been created.
-
-Now, I will implement the `ExecutionEvaluationModule` in `sql_evaluation_library/exec_evaluator.py`.
-This module will use the `split_sql_statements` utility and interact with the placeholder `LangfuseManager`.

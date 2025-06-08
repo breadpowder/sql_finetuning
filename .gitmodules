@@ -1,0 +1,3 @@
+[submodule "sql_evaluation_library/langfuse"]
+	path = sql_evaluation_library/langfuse
+	url = https://github.com/langfuse/langfuse.git
