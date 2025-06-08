@@ -42,6 +42,7 @@ venv/
 ENV/
 .env/
 .venv/
+sql_evaluation_library/sql_fine_tuning/
 
 # Jupyter Notebook
 .ipynb_checkpoints
@@ -61,3 +62,6 @@ ENV/
 .Trashes
 ehthumbs.db
 Thumbs.db 
+sql_evaluation_library/sql_fine_tuning/bin
+cursor-memory-bank
+memory-bank
