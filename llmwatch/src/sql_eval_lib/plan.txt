@@ -1,0 +1,55 @@
+Create a pip-installable Python package that offers a pluggable, opinionated but extensible framework on top of Langfuse for:
+- Tracing and observability of LLM pipelines.
+- Evaluation of pipeline outputs, with interchangeable strategies.
+0 Feedback capture in simple Boolean or categorical forms.
+
+The reference implementation will target SQL-generation tasks as current code base, but every component must be generic so other domains can subclass or swap parts.
+
+-> Env set up and validation
+    -> self-hosed langfuse (https://langfuse.com/self-hosting/docker-compose)
+    -> self hosted model endpoint if endpoint is set
+    -> external model key (e.g. openai, claude, google)
+    -> external db is configured check connection
+
+-> Integration capability 
+   Integration with self-hosted model ollama (https://langfuse.com/docs/integrations/ollama)
+    Integration with langgraph agentic (https://langfuse.com/docs/integrations/langchain/example-python-langgraph, https://langfuse.com/docs/integrations/langchain/example-langgraph-agents)
+
+-> Offline evaluation dataset 
+    Offline evaluation (Section https://langfuse.com/docs/integrations/langchain/example-langgraph-agent offline evaluation)
+    -> support dateset creating (from huggingface or customerized dataset) - schema alignment abstract dataset
+    -> create dataset if not exists (https://langfuse.com/docs/datasets/example-synthetic-datasets)
+
+    -> run agent on the dataset (section running agent on the dataset https://langfuse.com/docs/integrations/langchain/example-langgraph-agents default llm-as-a-judge or execution-based or both ) on the dataset
+    -> persisted evaluation result (require dashboard)
+    -> tracing using opentelemetry (https://langfuse.com/docs/opentelemetry/get-started # OTEL_EXPORTER_OTLP_ENDPOINT="http://localhost:3000/api/public/otel" # 🏠 Local deployment (>= v3.22.0))
+
+-> Collect feedback 
+    (https://langfuse.com/docs/scores/custom)
+    USER feedback like Ipython display (https://langfuse.com/docs/integrations/langchain/example-langgraph-agents#3-user-feedback) try docker
+
+Bug fix
+1. Create a conf .env and put all env variable here, using dotenv to process
+
+
+2. def get_generated_sqlpai_from_model(sql_prompt: str, sql_context: str, ground_truth_sql: str = None) -> str:
+You Need to implment this method. Add system promopt using langraph prompt template.
+
+3. Fix code regarding Langfuse api does not exists
+from langfuse.model import CreateTrace, CreateGeneration, CreateScore, CreateEvent these import method were not found
+current_trace = langfuse_client.trace(
+    CreateTrace(
+        id=f"exec-{item_id}", # Prefix to distinguish from LLM eval traces
+        name=f"SQL Execution Eval - {item_id}",
+        user_id="execution_eval_script_user",
+        metadata={"item_id": item_id, "sql_prompt_snippet": sql_prompt[:100]},
+        tags=["text-to-sql", "execution-evaluation"]
+    )
+)
+
+4. DB needs to be extensible not only sqlite in memory, also needs to support sqllite persisteted db and trino.
+Also, User can plugin its own database, connection config and implementation if needed.
+
+5. For integrating testing, please set up self-hosted langfuse for integration test.
+
+

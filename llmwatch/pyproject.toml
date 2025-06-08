@@ -1,0 +1,95 @@
+# pyproject.toml (located at the root of the llmwatch project)
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/sql_eval_lib"]
+
+[project]
+name = "llmwatch"
+version = "0.1.0" # Initial version
+description = "LLMWatch - A comprehensive library for monitoring and evaluating LLM applications, with specialized support for Text-to-SQL models."
+readme = "README.md" # Assumes README.md is in the same directory as pyproject.toml
+requires-python = ">=3.10"
+license = {text = "Apache-2.0"}
+authors = [
+    {name = "AI Assistant Jules", email = "noreply@example.com"} # Placeholder
+]
+keywords = ["llm", "monitoring", "evaluation", "sql", "text-to-sql", "langfuse", "observability"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12", # Adding 3.12 as it's current
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Testing",
+]
+
+dependencies = [
+    "langfuse>=2.0,<4.0", # Allowing minor and patch updates within v2 and v3
+    "openai>=1.0,<2.0", # Allowing minor and patch updates within v1
+    "sqlglot>=26.0,<27.0", # Based on version used in earlier llm_evaluate.py step (v26.19.0)
+    "python-dotenv>=1.0,<2.0", # Environment variable management
+    "pydantic>=2.0,<3.0", # Configuration validation and type safety
+    "PyYAML>=6.0,<7.0", # YAML configuration file support
+    "langchain-core>=0.2.43",
+    "langgraph>=0.0.69",
+    "langchain-openai>=0.1.25",
+    "pydantic-settings>=2.9.1",
+    "datasets>=3.6.0",
+    "pandas>=2.3.0",
+    "boto3>=1.38.31",
+    "matplotlib>=3.10.3",
+    "seaborn>=0.13.2",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/placeholder/llmwatch" # Placeholder
+"Repository" = "https://github.com/placeholder/llmwatch" # Placeholder
+"Bug Tracker" = "https://github.com/placeholder/llmwatch/issues" # Placeholder
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0,<9.0", 
+    "ruff>=0.1.0,<0.6.0" # Example popular linter/formatter
+]
+# Optional database backends
+database = [
+    "trino>=0.328,<1.0",     # Trino connector
+    "psycopg2-binary>=2.9,<3.0", # PostgreSQL adapter (binary distribution)
+    "pymysql>=1.0,<2.0",     # MySQL adapter
+]
+# Optional integrations
+integrations = [
+    "ollama>=0.1.0,<1.0",    # Ollama client
+    "langchain>=0.1.0,<1.0", # LangChain integration
+    "langchain-openai>=0.0.5,<0.2.0", # OpenAI via LangChain
+    "langgraph>=0.0.30,<0.1.0",     # LangGraph
+    "opentelemetry-api>=1.20,<2.0", # OpenTelemetry tracing
+    "opentelemetry-exporter-otlp>=1.20,<2.0", # OTLP exporter
+]
+# Example for notebook usage
+notebook = [
+    "jupyter>=1.0,<2.0", 
+    "ipywidgets>=8.0,<9.0"
+]
+# Configuration file format support
+config = [
+    "tomli>=2.0,<3.0",       # TOML support for Python < 3.11
+]
+
+[dependency-groups]
+dev = [
+    "docker>=7.1.0",
+    "pytest>=8.4.0",
+    "pytest-asyncio>=1.0.0",
+    "pytest-mock>=3.14.1",
+]
