@@ -1,7 +1,7 @@
 """Tests for dataset models."""
 
 import pytest
-from src.sql_eval_lib.dataset.models import DatasetItem, DatasetMetadata
+from sql_eval_lib.dataset.models import DatasetItem, DatasetMetadata
 
 
 def test_dataset_item_creation():

@@ -6,7 +6,7 @@ import os
 import subprocess
 import shutil
 from pathlib import Path
-from src.sql_eval_lib.langfuse.deployment import LangfuseDeployment, DeploymentConfig
+from sql_eval_lib.langfuse.deployment import LangfuseDeployment, DeploymentConfig
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -127,7 +127,7 @@ def langfuse_test_client(langfuse_deployment):
 @pytest.fixture
 def test_dataset_small():
     """Create a small test dataset for integration testing."""
-    from src.sql_eval_lib.dataset import HuggingFaceLoader
+    from sql_eval_lib.dataset import HuggingFaceLoader
     
     loader = HuggingFaceLoader()
     # Load a very small dataset for fast testing

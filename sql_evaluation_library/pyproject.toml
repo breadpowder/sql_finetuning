@@ -10,7 +10,7 @@ name = "sql-eval-lib"
 version = "0.1.0" # Initial version
 description = "A Python library for evaluating Text-to-SQL models."
 readme = "README.md" # Assumes README.md is in the same directory as pyproject.toml
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 license = {text = "Apache-2.0"}
 authors = [
     {name = "AI Assistant Jules", email = "noreply@example.com"} # Placeholder
@@ -23,8 +23,6 @@ classifiers = [
     "License :: OSI Approved :: Apache Software License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12", # Adding 3.12 as it's current
@@ -34,10 +32,21 @@ classifiers = [
 ]
 
 dependencies = [
-    "langfuse>=2.0,<4.0",    # Allowing minor and patch updates within v2 and v3
-    "openai>=1.0,<2.0",      # Allowing minor and patch updates within v1
-    "sqlglot>=26.0,<27.0",   # Based on version used in earlier llm_evaluate.py step (v26.19.0)
-    # "python-dotenv",      # Not a core library dependency, used for examples/scripts if they load .env
+    "langfuse>=2.0,<4.0", # Allowing minor and patch updates within v2 and v3
+    "openai>=1.0,<2.0", # Allowing minor and patch updates within v1
+    "sqlglot>=26.0,<27.0", # Based on version used in earlier llm_evaluate.py step (v26.19.0)
+    "python-dotenv>=1.0,<2.0", # Environment variable management
+    "pydantic>=2.0,<3.0", # Configuration validation and type safety
+    "PyYAML>=6.0,<7.0", # YAML configuration file support
+    "langchain-core>=0.2.43",
+    "langgraph>=0.0.69",
+    "langchain-openai>=0.1.25",
+    "pydantic-settings>=2.9.1",
+    "datasets>=3.6.0",
+    "pandas>=2.3.0",
+    "boto3>=1.38.31",
+    "matplotlib>=3.10.3",
+    "seaborn>=0.13.2",
 ]
 
 [project.urls]
@@ -50,18 +59,35 @@ dev = [
     "pytest>=7.0,<9.0", 
     "ruff>=0.1.0,<0.6.0" # Example popular linter/formatter
 ]
-# Example for notebook usage if not included in core
-# notebook = ["jupyterlab", "ipywidgets"]
-```
+# Optional database backends
+database = [
+    "trino>=0.328,<1.0",     # Trino connector
+    "psycopg2-binary>=2.9,<3.0", # PostgreSQL adapter (binary distribution)
+    "pymysql>=1.0,<2.0",     # MySQL adapter
+]
+# Optional integrations
+integrations = [
+    "ollama>=0.1.0,<1.0",    # Ollama client
+    "langchain>=0.1.0,<1.0", # LangChain integration
+    "langchain-openai>=0.0.5,<0.2.0", # OpenAI via LangChain
+    "langgraph>=0.0.30,<0.1.0",     # LangGraph
+    "opentelemetry-api>=1.20,<2.0", # OpenTelemetry tracing
+    "opentelemetry-exporter-otlp>=1.20,<2.0", # OTLP exporter
+]
+# Example for notebook usage
+notebook = [
+    "jupyter>=1.0,<2.0", 
+    "ipywidgets>=8.0,<9.0"
+]
+# Configuration file format support
+config = [
+    "tomli>=2.0,<3.0",       # TOML support for Python < 3.11
+]
 
-**Notes on choices:**
-*   **`backend-path`**: Commented out as it's usually not needed for `hatchling` unless specific plugins not following PEP 517 are directly included in the project structure for the build.
-*   **`requires-python`**: Kept as `>=3.8`.
-*   **`classifiers`**: Added Python 3.12.
-*   **`dependencies`**:
-    *   `langfuse`: Updated to `<4.0` to allow for v3.x if available and compatible, as v3 was mentioned in Langfuse docs.
-    *   `sqlglot`: Set to `>=26.0,<27.0` to align with the version `26.19.0` installed when `llm_evaluate.py` was created. This provides a stable range.
-    *   `python-dotenv`: Commented out as it's not a direct dependency of the *library* itself, but rather for convenience in running examples or scripts. If it were to be used by the library core, it would be uncommented.
-*   **`[project.optional-dependencies]`**: Updated `dev` dependencies with more common version pinning.
-
-The file `sql_evaluation_library/pyproject.toml` should now be created with this content.
+[dependency-groups]
+dev = [
+    "docker>=7.1.0",
+    "pytest>=8.4.0",
+    "pytest-asyncio>=1.0.0",
+    "pytest-mock>=3.14.1",
+]

@@ -1,7 +1,7 @@
 """Tests for dataset transformers."""
 
 import pytest
-from src.sql_eval_lib.dataset import SQLTransformer, HuggingFaceLoader
+from sql_eval_lib.dataset import SQLTransformer, HuggingFaceLoader
 
 
 def test_sql_transformer():

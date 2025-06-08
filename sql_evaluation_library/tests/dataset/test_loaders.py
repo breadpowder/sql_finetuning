@@ -1,7 +1,7 @@
 """Tests for dataset loaders."""
 
 import pytest
-from src.sql_eval_lib.dataset import HuggingFaceLoader
+from sql_eval_lib.dataset import HuggingFaceLoader
 
 
 def test_huggingface_loader():

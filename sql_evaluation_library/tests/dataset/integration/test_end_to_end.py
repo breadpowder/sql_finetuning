@@ -2,14 +2,14 @@
 
 import pytest
 import time
-from src.sql_eval_lib.dataset import HuggingFaceLoader, SQLTransformer, LangfuseDatasetManager
+from sql_eval_lib.dataset import HuggingFaceLoader, SQLTransformer, LangfuseDatasetManager
 
 
 def test_docker_deployment_setup(test_deployment_config):
     """Test that Docker deployment configuration is properly set up."""
     print("\n🧪 Testing Docker deployment configuration...")
     
-    from src.sql_eval_lib.langfuse.deployment import LangfuseDeployment
+    from sql_eval_lib.langfuse.deployment import LangfuseDeployment
     
     deployment = LangfuseDeployment(test_deployment_config)
     
